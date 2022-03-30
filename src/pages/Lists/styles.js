@@ -18,7 +18,7 @@ export const TextHeaderContainer = styled.View`
 export const AddItem = styled.TouchableOpacity`
   height: 50px;
   width: 50px;
-  border-radius: 50px
+  border-radius: 50px;
   justify-content: center;
   align-items: center;
 `;
@@ -49,7 +49,7 @@ export const ListName = styled.Text`
 export const BoxItens = styled.View`
   width: 80px;
   height: 30px;
-  border-radius: 200px
+  border-radius: 200px;
   margin: 0% 0% 0% 5%;
   background-color: red;
   align-items: center;

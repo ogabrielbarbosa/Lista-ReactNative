@@ -43,7 +43,7 @@ export const ListName = styled.Text`
 export const BoxItens = styled.View`
   width: 80px;
   height: 30px;
-  border-radius: 200px
+  border-radius: 200px;
   margin: 0% 0% 0% 5%;
   background-color: red;
   align-items: center;
