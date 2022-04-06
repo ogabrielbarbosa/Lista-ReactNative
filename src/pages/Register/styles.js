@@ -11,6 +11,23 @@ export const Container = styled.View`
   margin: 10% 10% 10% 10%;
 `;
 
+export const ContainerTop = styled.View`
+  width: 100%;
+  height: 30%;
+`;
+
+export const ContainerMid = styled.View`
+  width: 100%;
+  height: 60%;
+`;
+
+export const ContainerBottom = styled.View`
+  width: 100%;
+  height: 10%;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const TextHeader = styled.Text`
   color: ${props => props.theme.text};
   font-size: 30px;

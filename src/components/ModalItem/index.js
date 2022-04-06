@@ -15,7 +15,7 @@ import {
   TextDelete
 } from './styles';
 
-export default function ModalItem({data, close}) {
+export default function ModalItem({data, close, deleted }) {
  return (
     <Modal transparent={true} animationType="fade">
       <Container>
@@ -31,19 +31,19 @@ export default function ModalItem({data, close}) {
 
             </BoxItem>
             <TextSend>
-              5 de mar de 2022
+              {data.dataEnvio}
             </TextSend>
             <TextItem>
               {data.produto}
             </TextItem>
             <BoxCategoria>
               <TextCategoria>
-                Doce
+                {data.categoria}
               </TextCategoria>
             </BoxCategoria>
           </ContainerMid>
           <ContainerBottom>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={deleted}>
               <TextDelete>
                 Excluir item
               </TextDelete>

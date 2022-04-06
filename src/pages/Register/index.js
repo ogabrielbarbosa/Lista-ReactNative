@@ -3,6 +3,9 @@ import { View, StatusBar, Image, TouchableOpacity, StyleSheet} from 'react-nativ
 import {
   Body,
   Container,
+  ContainerTop,
+  ContainerMid,
+  ContainerBottom,
   TextHeader,
   ContanerInputText,
   TextInput,
@@ -40,62 +43,75 @@ export default function Login() {
     <Body>
       <Container
     behavior="padding">
-        <Image
-          source={require('../../assets/login.png')}
-          style={{
-            width: 300,
-            height: 200,
-            alignSelf: 'center'
-          }}
-        />  
-        <TextHeader>
-          Registrar
-        </TextHeader>
-        <ContainerLogins>
-          <LoginBox></LoginBox>
-          <LoginBox></LoginBox>
-          <LoginBox></LoginBox>
-        </ContainerLogins>
-        <OrText>Ou, faça registre com...</OrText>
-        <ContanerInputText>
-          <Ionicons name="person" size={20} color="#9298a6"></Ionicons>
-          <TextInput
-          placeholder="Nome"
-          selectionColor='#0165ff'
-          autoCorrect={false}
-          autoCapitalize="none"
-          value={name}
-          onChangeText={ (text) => setName(text) }
-          />
-        </ContanerInputText>
-        <ContanerInputText>
-          <Entypo name="email" size={20} color="#9298a6"></Entypo>
-          <TextInput
-          placeholder="Email"
-          selectionColor='#0165ff'
-          keyboardType="email-address"
-          autoCorrect={false}
-          autoCapitalize="none"
-          value={email}
-          onChangeText={ (text) => setEmail(text) }
-          />
-        </ContanerInputText>
-        <ContanerInputText>
-          <MaterialCommunityIcons name="form-textbox-password" size={20} color="#9298a6"></MaterialCommunityIcons>
-          <TextInput
-          placeholder="Senha"
-          selectionColor='#0165ff'
-          autoCorrect={false}
-          autoCapitalize="none"
-          value={password}
-          onChangeText={ (text) => setPassword(text) }
-          />
-        </ContanerInputText>
-        <ButtonBottom onPress={handleRegister}>
-          <TextButton>
+        <ContainerTop>
+          <Image
+            source={require('../../assets/login.png')}
+            style={{
+              width: 300,
+              height: 200,
+              alignSelf: 'center'
+            }}
+          />  
+        </ContainerTop>
+
+        <ContainerMid>
+          <TextHeader>
             Registrar
-          </TextButton>
-        </ButtonBottom>
+          </TextHeader>
+          <ContainerLogins>
+            <LoginBox></LoginBox>
+            <LoginBox></LoginBox>
+            <LoginBox></LoginBox>
+          </ContainerLogins>
+          <OrText>Ou, faça registre com...</OrText>
+          <ContanerInputText>
+            <Ionicons name="person" size={20} color="#9298a6"></Ionicons>
+            <TextInput
+            placeholder="Nome"
+            selectionColor='#0165ff'
+            autoCorrect={false}
+            autoCapitalize="none"
+            value={name}
+            onChangeText={ (text) => setName(text) }
+            />
+          </ContanerInputText>
+          <ContanerInputText>
+            <Entypo name="email" size={20} color="#9298a6"></Entypo>
+            <TextInput
+            placeholder="Email"
+            selectionColor='#0165ff'
+            keyboardType="email-address"
+            autoCorrect={false}
+            autoCapitalize="none"
+            value={email}
+            onChangeText={ (text) => setEmail(text) }
+            />
+          </ContanerInputText>
+          <ContanerInputText>
+            <MaterialCommunityIcons name="form-textbox-password" size={20} color="#9298a6"></MaterialCommunityIcons>
+            <TextInput
+            placeholder="Senha"
+            selectionColor='#0165ff'
+            autoCorrect={false}
+            autoCapitalize="none"
+            value={password}
+            onChangeText={ (text) => setPassword(text) }
+            />
+          </ContanerInputText>
+          <ButtonBottom onPress={handleRegister}>
+            <TextButton>
+              Registrar
+            </TextButton>
+          </ButtonBottom>
+        </ContainerMid>
+
+        <ContainerBottom>
+          <RegisterText>Já tem uma conta?
+            <RegisterTextButton onPress={()=> navigation.navigate("Login")}>
+              Login
+            </RegisterTextButton>
+          </RegisterText>
+        </ContainerBottom>
       </Container>
     </Body>
   );

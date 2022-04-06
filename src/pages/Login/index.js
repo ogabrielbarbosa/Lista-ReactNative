@@ -3,6 +3,9 @@ import { View, StatusBar, Image, TouchableOpacity, StyleSheet} from 'react-nativ
 import {
   Body,
   Container,
+  ContainerTop,
+  ContainerMid,
+  ContainerBottom,
   TextHeader,
   ContanerInputText,
   TextInput,
@@ -29,7 +32,7 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const { signIn, signGoogle } = useContext(AuthContext);
+  const { signIn, signGoogle } =  useContext(AuthContext);
 
   async function handleLogin(){
     console.log('1');
@@ -42,63 +45,71 @@ export default function Login() {
   }
 
   return (
-    <Body>
-      <Container 
-      behavior="position">
-        <Image
-          source={require('../../assets/login.png')}
-          style={{
-            width: 300,
-            height: 200,
-            alignSelf: 'center'
-          }}
-        />  
-        <TextHeader>
-          Login
-        </TextHeader>
-        <ContanerInputText>
-          <Entypo name="email" size={20} color="#9298a6"></Entypo>
-          <TextInput
-          placeholder="Email"
-          selectionColor='#0165ff'
-          keyboardType="email-address"
-          autoCorrect={false}
-          autoCapitalize="none"
-          value={email}
-          onChangeText={ (text) => setEmail(text) }
-          />
-        </ContanerInputText>
-        <ContanerInputText>
-          <MaterialCommunityIcons name="form-textbox-password" size={20} color="#9298a6"></MaterialCommunityIcons>
-          <TextInput
-          placeholder="Senha"
-          selectionColor='#0165ff'
-          secureTextEntry={true}
-          autoCorrect={false}
-          autoCapitalize="none"
-          value={password}
-          onChangeText={ (text) => setPassword(text) }
-          />
-          <TouchableOpacity><ForgotText>Esqueceu?</ForgotText></TouchableOpacity>
-        </ContanerInputText>
-        <ButtonBottom onPress={handleLogin}>
-          <TextButton>
+    <Body >
+      <Container>
+        <ContainerTop >
+          <Image
+            source={require('../../assets/login.png')}
+            style={{
+              width: 300,
+              height: 200,
+              alignSelf: 'center'
+            }}
+          />  
+        </ContainerTop>
+        <ContainerMid 
+        behavior="position">
+          <TextHeader>
             Login
-          </TextButton>
-        </ButtonBottom>
-        <OrText>Ou, faça login com...</OrText>
-        <ContainerLogins>
-          <LoginBox onPress={()=>onGoogleButtonPress()}>
-            <AntDesign name="google" size={20} color="#9298a6"/>
-          </LoginBox>
-          <LoginBox></LoginBox>
-          <LoginBox></LoginBox>
-        </ContainerLogins>
-        <RegisterText>Novo por aqui? 
-          <RegisterTextButton onPress={()=> navigation.navigate("Register")}>
-            Registrar
-          </RegisterTextButton>
-        </RegisterText>
+          </TextHeader>
+          <ContanerInputText>
+            <Entypo name="email" size={20} color="#9298a6"></Entypo>
+            <TextInput
+            placeholder="Email"
+            selectionColor='#0165ff'
+            keyboardType="email-address"
+            autoCorrect={false}
+            autoCapitalize="none"
+            value={email}
+            onChangeText={ (text) => setEmail(text) }
+            />
+          </ContanerInputText>
+          <ContanerInputText>
+            <MaterialCommunityIcons name="form-textbox-password" size={20} color="#9298a6"></MaterialCommunityIcons>
+            <TextInput
+            placeholder="Senha"
+            selectionColor='#0165ff'
+            secureTextEntry={true}
+            autoCorrect={false}
+            autoCapitalize="none"
+            value={password}
+            onChangeText={ (text) => setPassword(text) }
+            />
+            <TouchableOpacity onPress={()=> navigation.navigate("ForgotPass")}><ForgotText>Esqueceu?</ForgotText></TouchableOpacity>
+          </ContanerInputText>
+          <ButtonBottom onPress={handleLogin}>
+            <TextButton>
+              Login
+            </TextButton>
+          </ButtonBottom>
+          <OrText>Ou, faça login com...</OrText>
+          <ContainerLogins>
+            <LoginBox onPress={()=>onGoogleButtonPress()}>
+              <AntDesign name="google" size={20} color="#9298a6"/>
+            </LoginBox>
+            <LoginBox></LoginBox>
+            <LoginBox></LoginBox>
+          </ContainerLogins>
+        </ContainerMid>
+        
+        <ContainerBottom>
+          <RegisterText>Novo por aqui? 
+            <RegisterTextButton onPress={()=> navigation.navigate("Register")}>
+              Registrar
+            </RegisterTextButton>
+          </RegisterText>
+        </ContainerBottom>
+        
       </Container>
     </Body>
   );

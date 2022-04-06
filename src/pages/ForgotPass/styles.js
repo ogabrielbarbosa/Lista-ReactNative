@@ -16,7 +16,7 @@ export const ContainerTop = styled.View`
   height: 30%;
 `;
 
-export const ContainerMid = styled.KeyboardAvoidingView`
+export const ContainerMid = styled.View`
   width: 100%;
   height: 60%;
 `;

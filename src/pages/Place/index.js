@@ -26,6 +26,7 @@ import {
 import ModalItem from '../../components/ModalItem';
 
 import themes from '../../theme';
+import NativeAsyncLocalStorage from 'react-native/Libraries/Storage/NativeAsyncLocalStorage';
 
 export default function PricesProducts({ route }){
   const { user } = useContext(AuthContext);
@@ -60,10 +61,11 @@ export default function PricesProducts({ route }){
   ]
   const bgColor = (i) => colorAr[i % colorAr.length];
   useEffect(()=>{
-
+    
     async function loadCasas(){
       await firestore().collection('list')
       .where('placeId', '==', route.params.id)
+      .orderBy('dataEnvio', 'desc')
       .onSnapshot((doc)=>{
         let myPlaces = [];
 
@@ -110,7 +112,8 @@ export default function PricesProducts({ route }){
         nomeEnviado: user.nome,
         obs: observacao,
         placeId: route.params.id,
-        produto: product
+        produto: product,
+        dataEnvio: lastUpdate
       });
 
       await firestore().collection('places').doc(route.params.id).update({
@@ -123,6 +126,17 @@ export default function PricesProducts({ route }){
     
   }
 
+  async function deleteProduct(){
+    await firestore().collection('list').doc(detail.id).delete();
+
+    await firestore().collection('places').doc(route.params.id).update({
+      lastUpdate: lastUpdate,
+      qntItems: totalItems - 1
+    });
+
+    toggleShowModal();
+  }
+
   function copyClipboard(){
     Clipboard.setString(route.params.id);
   }
@@ -130,6 +144,18 @@ export default function PricesProducts({ route }){
   function toggleShowModal(item){
     setShowModal(!showModal);
     setDetail(item);
+    var monthNames = [ 'jan', 'fev', 'mar', 'abr', 'maio','jun',
+    'jul', 'ago', 'set', 'out', 'nov', 'dez'];
+    var date = new Date().getDate(); 
+    var month = monthNames[new Date().getMonth()];
+    var year = new Date().getFullYear(); 
+    var hours = new Date().getHours();
+    var minutes = new Date().getMinutes();
+    hours = hours > 9 ? hours : '0' + hours;
+    minutes = minutes > 9 ? minutes : '0' + minutes;
+    setLastUpdate(
+      date + ' de ' + month + ' de ' + year + ' | ' + hours + ':' + minutes
+    );
   }
   
   return(
@@ -209,6 +235,7 @@ export default function PricesProducts({ route }){
         <ModalItem
          data={detail}
          close={toggleShowModal}
+         deleted={deleteProduct}
         />
       )}
       
