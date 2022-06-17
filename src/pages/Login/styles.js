@@ -6,24 +6,18 @@ export const Body = styled.View`
   background-color: ${props => props.theme.background};
 `;
 
-export const Container = styled.View`
+export const Container = styled.KeyboardAvoidingView`
   flex: 1;
   margin: 10% 10% 10% 10%;
 `;
 
-export const ContainerTop = styled.View`
+export const ContainerMid = styled.View`
   width: 100%;
-  height: 30%;
-`;
-
-export const ContainerMid = styled.KeyboardAvoidingView`
-  width: 100%;
-  height: 60%;
 `;
 
 export const ContainerBottom = styled.View`
   width: 100%;
-  height: 10%;
+  height: 20%;
   justify-content: center;
   align-items: center;
 `;
@@ -51,15 +45,15 @@ export const TextInput = styled.TextInput`
 `;
 
 export const ForgotText = styled.Text`
-  color: #0165ff;
+  color: #6c63ff;
   font-size: 15px;
 `;
 
 export const ButtonBottom = styled.TouchableOpacity`
   width: 100%;
   height: 50px;
-  border-radius: 15px;
-  background-color: #0165ff;
+  border-radius: 10px;
+  background-color: #6c63ff;
   margin-top: 5%;
   margin-bottom: 5%;
   align-items: center;
@@ -102,5 +96,5 @@ export const RegisterText = styled.Text`
 
 export const RegisterTextButton = styled.Text`
   font-size: 15px;
-  color: #0165ff;
+  color: #6c63ff;
 `;

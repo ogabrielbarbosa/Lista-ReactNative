@@ -27,8 +27,8 @@ export const TextUnderHeader = styled.Text`
 export const List = styled.TouchableOpacity`
   width: 100%;
   height: 150px;
-  border-radius: 15px;
-  background-color: #0165ff;
+  border-radius: 10px;
+  background-color: #6c63ff;
   margin-bottom: 15px;
   justify-content: space-around;
 `;
@@ -41,10 +41,10 @@ export const ListName = styled.Text`
 `;
 
 export const BoxItens = styled.View`
-  width: 80px;
-  height: 30px;
+  width: 70px;
+  height: 25px;
   border-radius: 200px;
-  margin: 0% 0% 0% 5%;
+  margin: 1% 0% 0% 5%;
   background-color: red;
   align-items: center;
   justify-content: center;

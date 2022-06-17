@@ -44,13 +44,15 @@ function AuthProvider({ children }){
       await firestore().collection('users')
       .doc(uid).set({
         nome: name,
-        email: email
+        email: email,
+        urlImage: 'https://firebasestorage.googleapis.com/v0/b/lista-c162d.appspot.com/o/users%2F5zs8ShujJTaRXofyXe1wmIqlAAd2?alt=media&token=5ef98915-3712-4ede-9c65-1dc6538c569d'
       })
       .then(() => {
         let data = {
           uid: uid,
           nome: name,
-          email: value.user.email
+          email: value.user.email,
+          urlImage: 'https://firebasestorage.googleapis.com/v0/b/lista-c162d.appspot.com/o/users%2F5zs8ShujJTaRXofyXe1wmIqlAAd2?alt=media&token=5ef98915-3712-4ede-9c65-1dc6538c569d'
         }
 
         setUser(data);
@@ -98,7 +100,8 @@ function AuthProvider({ children }){
       let data = {
         uid: uid,
         nome: userProfile.data().nome,
-        email: value.user.email
+        email: value.user.email,
+        urlImage: 'https://firebasestorage.googleapis.com/v0/b/lista-c162d.appspot.com/o/users%2F5zs8ShujJTaRXofyXe1wmIqlAAd2?alt=media&token=5ef98915-3712-4ede-9c65-1dc6538c569d'
       };
       
       setUser(data);

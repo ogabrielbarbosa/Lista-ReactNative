@@ -75,9 +75,10 @@ export const Avatar = styled.Image`
 `;
 
 export const New = styled.TouchableOpacity`
-  width: 100%;
+  width: 96%;
+  align-self: center;
   height: 75px;
-  border-radius: 15px;
+  border-radius: 10px;
   background-color: #808080;
   justify-content: center;
   align-items: center;

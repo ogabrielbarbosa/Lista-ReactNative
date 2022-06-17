@@ -1,6 +1,6 @@
 export default{
-  background: '#000',
+  background: '#2F3541',
   text: '#fff',
   statusbar: 'light-content',
-  shadowcolor: '#0165ff'
+  shadowcolor: '#000'
 }

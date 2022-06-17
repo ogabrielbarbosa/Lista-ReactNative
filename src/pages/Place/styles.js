@@ -62,8 +62,8 @@ export const ItemText = styled.Text`
 export const AddItem = styled.TouchableOpacity`
   height: 60px;
   width: 60px;
-  border-radius: 50px
-  background-color: #0165ff;
+  border-radius: 50px;
+  background-color: #6C63FF;
   justify-content: center;
   align-items: center;
 `;
@@ -84,7 +84,7 @@ export const TextInput = styled.TextInput`
 `;
 
 export const ForgotText = styled.Text`
-  color: #0165ff;
+  color: #6C63FF;
   font-size: 15px;
   margin-left: 30%
 `;

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { View, StatusBar, Image, TouchableOpacity, StyleSheet} from 'react-native';
+import { View, StatusBar, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import {
   Body,
   Container,
@@ -21,6 +21,7 @@ import {
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 import { AuthContext } from '../../contexts/auth';
 
@@ -35,67 +36,71 @@ export default function Login() {
 
   const { signUp } = useContext(AuthContext);
 
-  async function handleRegister(){
+  async function handleRegister() {
     await signUp(email, password, name);
   }
 
   return (
     <Body>
       <Container
-    behavior="padding">
-        <ContainerTop>
-          <Image
-            source={require('../../assets/login.png')}
-            style={{
-              width: 300,
-              height: 200,
-              alignSelf: 'center'
-            }}
-          />  
-        </ContainerTop>
-
+        behavior="position">
         <ContainerMid>
+          <Image
+            source={require('../../assets/signup.png')}
+            style={{
+              width: 250,
+              height: 200,
+              alignSelf: 'center',
+              marginBottom: '5%'
+            }}
+          />
           <TextHeader>
             Registrar
           </TextHeader>
           <ContainerLogins>
-            <LoginBox></LoginBox>
-            <LoginBox></LoginBox>
-            <LoginBox></LoginBox>
+            <LoginBox onPress={() => onGoogleButtonPress()}>
+              <AntDesign name="google" size={20} color="#9298a6" />
+            </LoginBox>
+            <LoginBox>
+              <Entypo name="facebook" size={20} color="#9298a6" />
+            </LoginBox>
+            <LoginBox>
+              <AntDesign name="twitter" size={20} color="#9298a6" />
+            </LoginBox>
           </ContainerLogins>
-          <OrText>Ou, faça registre com...</OrText>
+          <OrText>Ou, se registre com...</OrText>
           <ContanerInputText>
             <Ionicons name="person" size={20} color="#9298a6"></Ionicons>
             <TextInput
-            placeholder="Nome"
-            selectionColor='#0165ff'
-            autoCorrect={false}
-            autoCapitalize="none"
-            value={name}
-            onChangeText={ (text) => setName(text) }
+              placeholder="Nome"
+              selectionColor='#0165ff'
+              autoCorrect={false}
+              autoCapitalize="none"
+              value={name}
+              onChangeText={(text) => setName(text)}
             />
           </ContanerInputText>
           <ContanerInputText>
             <Entypo name="email" size={20} color="#9298a6"></Entypo>
             <TextInput
-            placeholder="Email"
-            selectionColor='#0165ff'
-            keyboardType="email-address"
-            autoCorrect={false}
-            autoCapitalize="none"
-            value={email}
-            onChangeText={ (text) => setEmail(text) }
+              placeholder="Email"
+              selectionColor='#0165ff'
+              keyboardType="email-address"
+              autoCorrect={false}
+              autoCapitalize="none"
+              value={email}
+              onChangeText={(text) => setEmail(text)}
             />
           </ContanerInputText>
           <ContanerInputText>
             <MaterialCommunityIcons name="form-textbox-password" size={20} color="#9298a6"></MaterialCommunityIcons>
             <TextInput
-            placeholder="Senha"
-            selectionColor='#0165ff'
-            autoCorrect={false}
-            autoCapitalize="none"
-            value={password}
-            onChangeText={ (text) => setPassword(text) }
+              placeholder="Senha"
+              selectionColor='#0165ff'
+              autoCorrect={false}
+              autoCapitalize="none"
+              value={password}
+              onChangeText={(text) => setPassword(text)}
             />
           </ContanerInputText>
           <ButtonBottom onPress={handleRegister}>
@@ -106,11 +111,7 @@ export default function Login() {
         </ContainerMid>
 
         <ContainerBottom>
-          <RegisterText>Já tem uma conta?
-            <RegisterTextButton onPress={()=> navigation.navigate("Login")}>
-              Login
-            </RegisterTextButton>
-          </RegisterText>
+          <RegisterText onPress={() => navigation.navigate("Login")}>Já tem uma conta? <RegisterTextButton>Login</RegisterTextButton></RegisterText>
         </ContainerBottom>
       </Container>
     </Body>

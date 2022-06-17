@@ -1,17 +1,18 @@
-import React, { useState, useEffect, useRef, useContext} from 'react';
-import { Text, StyleSheet, FlatList, useColorScheme, TouchableOpacity, ActivityIndicator } from 'react-native';
+import React, { useState, useEffect, useRef, useContext } from 'react';
+import { View, StyleSheet, FlatList, useColorScheme, TouchableOpacity, ActivityIndicator } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../../contexts/auth';
 
 import firestore from '@react-native-firebase/firestore';
+import storage from '@react-native-firebase/storage';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import Feather from 'react-native-vector-icons/Feather';
 import { Modalize } from 'react-native-modalize';
 
 import * as Animatable from 'react-native-animatable'
-import { 
+import {
   Body,
   Container,
   TextHeader,
@@ -28,57 +29,66 @@ import {
   TextInput,
   ContainerPlaces,
   TextPlaces,
-  TextUpdate
+  ContainerProfiles,
+  Avatar,
+  BoxAdd
 } from './styles';
 
 import themes from '../../theme';
 
-export default function Lists(){
+export default function Lists() {
   const navigation = useNavigation();
   const { user } = useContext(AuthContext);
   const modalizeRef = useRef(null);
   const modalizeRef2 = useRef(null);
-  
+
   const [places, setPlaces] = useState([]);
-  const [avatars, setAvatars] = useState([]);
   const [nomeLista, setNomeLista] = useState('');
   const [codeList, setCodeList] = useState('');
+  const [url, setUrl] = useState('');
   const [lastUpdate, setLastUpdate] = useState('');
   const deviceTheme = useColorScheme();
 
   const [loading, setLoadgin] = useState(true);
   const viewRef = useRef(null);
   const theme = themes[deviceTheme] || theme.dark;
-  useEffect(()=> {
+  useEffect(() => {
 
-    async function loadCasas(){
+    async function loadCasas() {
       await firestore().collection('places')
-      .where('peoples', 'array-contains', user.uid)
-      .orderBy('lastUpdate', 'desc')
-      .onSnapshot((doc)=>{
-        let myPlaces = [];
+        .where('peoples', 'array-contains', user.uid)
+        .orderBy('lastUpdate', 'desc')
+        .onSnapshot((doc) => {
+          let myPlaces = [];
 
-        doc.forEach((item)=>{
-          myPlaces.push({
-            ...item.data(),
-            id: item.id
-          })
+          doc.forEach((item) => {
+            myPlaces.push({
+              ...item.data(),
+              id: item.id
+            })
+          });
+
+          setPlaces(myPlaces);
+
         });
 
-        setPlaces(myPlaces);
-
-      });
+      await firestore().collection('users')
+        .doc(user.uid)
+        .get().then((snapshot) => {
+          setUrl(snapshot.data().urlImage);
+        })
       setLoadgin(false);
     }
 
     loadCasas();
 
   }, []);
+  console.log(url)
 
-  async function createList(){
-    if(nomeLista==''){
+  async function createList() {
+    if (nomeLista == '') {
       alert('Porfavor, preencha o campo nome da lista')
-    }else{
+    } else {
       await firestore().collection('places').add({
         nomeCasa: nomeLista,
         ownerId: user.uid,
@@ -95,13 +105,13 @@ export default function Lists(){
     }
   }
 
-  function openModal(){
+  function openModal() {
     modalizeRef.current?.open();
-    var monthNames = [ 'jan', 'fev', 'mar', 'abr', 'maio','jun',
-    'jul', 'ago', 'set', 'out', 'nov', 'dez'];
-    var date = new Date().getDate(); 
+    var monthNames = ['jan', 'fev', 'mar', 'abr', 'maio', 'jun',
+      'jul', 'ago', 'set', 'out', 'nov', 'dez'];
+    var date = new Date().getDate();
     var month = monthNames[new Date().getMonth()];
-    var year = new Date().getFullYear(); 
+    var year = new Date().getFullYear();
     var hours = new Date().getHours();
     var minutes = new Date().getMinutes();
     hours = hours > 9 ? hours : '0' + hours;
@@ -111,27 +121,27 @@ export default function Lists(){
     );
   }
 
-  function openModalJoin(){
+  function openModalJoin() {
     modalizeRef2.current?.open();
   }
 
-  async function joinList(){
-    if(codeList==''){
+  async function joinList() {
+    if (codeList == '') {
       alert('Porfavor, preencha o campo código da lista')
-    }else{
+    } else {
       await firestore().collection('places')
-      .doc(codeList)
-      .update({
-        peoples: firestore.FieldValue.arrayUnion(user.uid)
-      });
+        .doc(codeList)
+        .update({
+          peoples: firestore.FieldValue.arrayUnion(user.uid)
+        });
       setNomeLista('');
       setCodeList('');
       modalizeRef2.current?.close();
     }
   }
 
-  if(loading){
-    return(
+  if (loading) {
+    return (
       <Body>
         <Container>
           <TextHeaderContainer>
@@ -150,7 +160,7 @@ export default function Lists(){
     )
   }
 
-  return(
+  return (
     <Body>
       <Container>
         <TextHeaderContainer>
@@ -174,37 +184,44 @@ export default function Lists(){
           </ContainerPlaces>
         ) : (
           <FlatList
-          data={places}
-          keyExtractor={ item => item.id}
-          contentContainerStyle={{ paddingBottom: '15%' }}
-          ListFooterComponent={()=>
-            <New onPress={openModal}>
-              <ContainerPlus>
-                <Feather name="plus" color={'#fff'} size={30} />
-              </ContainerPlus>
-            </New>
-          }
-          showsVerticalScrollIndicator={false}
-          renderItem={({item, index})=>
-            <List style={{elevation: 0, ...styles.shadow}} onPress={()=>{navigation.navigate("Place", {nomeCasa: item.nomeCasa, ownerName: item.ownerName, id: item.id, qntItems: item.qntItems})}}>
-              <ListName>{item.nomeCasa}</ListName>
-              <BoxItens>
-                <TextItens>{item.qntItems} itens</TextItens>
-              </BoxItens>
-              <TextUpdate>Atualizado em: {item.lastUpdate}</TextUpdate>
-            </List>
-          }
+            data={places}
+            keyExtractor={item => item.id}
+            contentContainerStyle={{ paddingBottom: '15%' }}
+            ListFooterComponent={() =>
+              <New onPress={openModal}>
+                <ContainerPlus>
+                  <Feather name="plus" color={'#fff'} size={30} />
+                </ContainerPlus>
+              </New>
+            }
+            showsVerticalScrollIndicator={false}
+            renderItem={({ item, index }) =>
+              <List style={{ elevation: 0, ...styles.shadow }} onPress={() => { navigation.navigate("Place", { nomeCasa: item.nomeCasa, ownerName: item.ownerName, id: item.id, qntItems: item.qntItems }) }}>
+                <View>
+                  <ListName>{item.nomeCasa}</ListName>
+                  <BoxItens>
+                    <TextItens>{item.qntItems} itens</TextItens>
+                  </BoxItens>
+                </View>
+                <ContainerProfiles>
+                  <Avatar source={{ uri: url }} />
+                  <BoxAdd>
+                    <Feather name="plus" color={'#fff'} size={25} />
+                  </BoxAdd>
+                </ContainerProfiles>
+              </List>
+            }
           />
         )}
       </Container>
 
       <Modalize
-      ref={modalizeRef}
-      snapPoint={500}
-      modalStyle={{
-        flex: 1,
-        backgroundColor: theme.background
-      }}
+        ref={modalizeRef}
+        snapPoint={500}
+        modalStyle={{
+          flex: 1,
+          backgroundColor: theme.background
+        }}
       >
         <Body>
           <Container>
@@ -212,28 +229,28 @@ export default function Lists(){
               Criar uma lista?
             </TextHeader>
             <ContanerInputText>
-            <Ionicons name="list" size={20} color="#9298a6"/>
+              <Ionicons name="list" size={20} color="#9298a6" />
               <TextInput
-              placeholder="Nome da lista"
-              selectionColor='#0165ff'
-              keyboardType="email-address"
-              autoCorrect={false}
-              autoCapitalize="none"
-              value={nomeLista}
-              onChangeText={ (text) => setNomeLista(text) }
+                placeholder="Nome da lista"
+                selectionColor='#0165ff'
+                keyboardType="email-address"
+                autoCorrect={false}
+                autoCapitalize="none"
+                value={nomeLista}
+                onChangeText={(text) => setNomeLista(text)}
               />
-                <TouchableOpacity onPress={createList}><ForgotText>Criar</ForgotText></TouchableOpacity>
+              <TouchableOpacity onPress={createList}><ForgotText>Criar</ForgotText></TouchableOpacity>
             </ContanerInputText>
           </Container>
         </Body>
       </Modalize>
       <Modalize
-      ref={modalizeRef2}
-      snapPoint={500}
-      modalStyle={{
-        flex: 1,
-        backgroundColor: theme.background
-      }}
+        ref={modalizeRef2}
+        snapPoint={500}
+        modalStyle={{
+          flex: 1,
+          backgroundColor: theme.background
+        }}
       >
         <Body>
           <Container>
@@ -241,16 +258,16 @@ export default function Lists(){
               Entrar em uma lista?
             </TextHeader>
             <ContanerInputText>
-            <Ionicons name="list" size={20} color="#9298a6"/>
+              <Ionicons name="list" size={20} color="#9298a6" />
               <TextInput
-              placeholder="Código da lista"
-              selectionColor='#0165ff'
-              autoCorrect={false}
-              autoCapitalize="none"
-              value={codeList}
-              onChangeText={ (text) => setCodeList(text) }
+                placeholder="Código da lista"
+                selectionColor='#0165ff'
+                autoCorrect={false}
+                autoCapitalize="none"
+                value={codeList}
+                onChangeText={(text) => setCodeList(text)}
               />
-                <TouchableOpacity onPress={joinList}><ForgotText>Entrar</ForgotText></TouchableOpacity>
+              <TouchableOpacity onPress={joinList}><ForgotText>Entrar</ForgotText></TouchableOpacity>
             </ContanerInputText>
           </Container>
         </Body>

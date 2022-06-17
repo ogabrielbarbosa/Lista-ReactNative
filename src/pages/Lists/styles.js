@@ -33,8 +33,8 @@ export const TextHeader = styled.Text`
 export const List = styled.TouchableOpacity`
   width: 100%;
   height: 150px;
-  border-radius: 15px;
-  background-color: #0165ff;
+  border-radius: 10px;
+  background-color: #6c63ff;
   margin-bottom: 15px;
   justify-content: space-around;
 `;
@@ -47,10 +47,10 @@ export const ListName = styled.Text`
 `;
 
 export const BoxItens = styled.View`
-  width: 80px;
-  height: 30px;
+  width: 70px;
+  height: 25px;
   border-radius: 200px;
-  margin: 0% 0% 0% 5%;
+  margin: 1% 0% 0% 5%;
   background-color: red;
   align-items: center;
   justify-content: center;
@@ -68,16 +68,10 @@ export const Photo = styled.View`
   background-color: #fff;
 `;
 
-export const Avatar = styled.Image`
-  width: 50px;
-  height: 50px;
-  border-radius: 80px;
-`;
-
 export const New = styled.TouchableOpacity`
   width: 100%;
   height: 75px;
-  border-radius: 15px;
+  border-radius: 10px;
   background-color: #808080;
   justify-content: center;
   align-items: center;
@@ -109,7 +103,7 @@ export const TextInput = styled.TextInput`
 `;
 
 export const ForgotText = styled.Text`
-  color: #0165ff;
+  color: #6c63ff;
   font-size: 15px;
 `;
 
@@ -121,7 +115,7 @@ export const ContainerPlaces = styled.View`
 `;
 
 export const TextPlaces = styled.Text`
-  color: #0165ff;
+  color: #6c63ff;
   font-size: 15px;
   margin-bottom: 5%;
 `;
@@ -130,4 +124,30 @@ export const TextUpdate = styled.Text`
   color: #fff;
   font-size: 15px;
   margin: 0% 0% 0% 5%;
+`;
+
+export const ContainerProfiles = styled.View`
+  flex-direction: row;
+  margin-left: 5%;
+`;
+
+export const Avatar = styled.Image`
+  margin-top: 0px;
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
+  background-color: #6c63ff;
+  border: 1px solid #fff;
+`;
+
+export const BoxAdd = styled.View`
+  margin-top: 0px;
+  width: 40px;
+  margin-left: -10px;
+  height: 40px;
+  border-radius: 40px;
+  background-color: #6c63ff;
+  border: 1px solid #fff;
+  justify-content: center;
+  align-items: center;
 `;

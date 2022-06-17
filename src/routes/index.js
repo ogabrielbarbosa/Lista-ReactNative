@@ -22,7 +22,7 @@ function Routes(){
         alignItems: 'center', 
         backgroundColor: theme.background
       }}>
-        <ActivityIndicator size={50} color="#0165ff" />
+        <ActivityIndicator size={50} color="#6C63FF" />
       </View>
     )
   }

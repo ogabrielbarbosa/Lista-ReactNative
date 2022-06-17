@@ -114,7 +114,7 @@ function AppRoutes(){
         headerShown: false,
         tabBarHideOnKeyboard: false,
         tabBarShowLabel: false,
-        tabBarActiveTintColor: '#0165ff',
+        tabBarActiveTintColor: '#6C63FF',
         
         tabBarStyle:{
           backgroundColor: theme.background,

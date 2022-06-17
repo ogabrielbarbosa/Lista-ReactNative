@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useContext} from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { StatusBar, TouchableOpacity, FlatList, View, Text, Dimensions, StyleSheet } from 'react-native';
 
 import firestore from '@react-native-firebase/firestore';
@@ -6,7 +6,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native'
 import { AuthContext } from '../../contexts/auth'
 import * as Animatable from 'react-native-animatable'
-import { 
+import {
   Body,
   Container,
   TextHeader,
@@ -20,7 +20,7 @@ import {
 
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-export default function Home(){
+export default function Home() {
   const navigation = useNavigation();
   const { user } = useContext(AuthContext);
   const modalizeRef = useRef(null);
@@ -40,47 +40,47 @@ export default function Home(){
     '#ff4c98',
   ]
   const bgColor = (i) => colorAr[i % colorAr.length];
-  useEffect(()=> {
+  useEffect(() => {
 
-    async function loadCasas(){
+    async function loadCasas() {
       await firestore().collection('places')
-      .where('peoples', 'array-contains', user.uid)
-      .orderBy('lastUpdate', 'desc')
-      .limit(1)
-      .onSnapshot((doc)=>{
-        let myPlaces = [];
+        .where('peoples', 'array-contains', user.uid)
+        .orderBy('lastUpdate', 'desc')
+        .limit(1)
+        .onSnapshot((doc) => {
+          let myPlaces = [];
 
-        doc.forEach((item)=>{
-          myPlaces.push({
-            ...item.data(),
-            id: item.id
-          })
+          doc.forEach((item) => {
+            myPlaces.push({
+              ...item.data(),
+              id: item.id
+            })
+          });
+
+          setPlaces(myPlaces);
+
         });
-
-        setPlaces(myPlaces);
-
-      });
       setLoadgin(false);
     }
 
-    async function loadProducts(){
+    async function loadProducts() {
       await firestore().collection('products')
-      .where('personId', '==', user.uid)
-      .orderBy('createData', 'desc')
-      .limit(4)
-      .onSnapshot((doc)=>{
-        let myProducts = [];
+        .where('personId', '==', user.uid)
+        .orderBy('createData', 'desc')
+        .limit(4)
+        .onSnapshot((doc) => {
+          let myProducts = [];
 
-        doc.forEach((item)=>{
-          myProducts.push({
-            ...item.data(),
-            id: item.id
-          })
+          doc.forEach((item) => {
+            myProducts.push({
+              ...item.data(),
+              id: item.id
+            })
+          });
+
+          setProducts(myProducts);
+
         });
-
-        setProducts(myProducts);
-
-      });
       setLoadgin(false);
     }
 
@@ -91,7 +91,7 @@ export default function Home(){
   }, []);
 
 
-  return(
+  return (
     <Body>
       <Container>
         <TextHeader>
@@ -99,15 +99,15 @@ export default function Home(){
         </TextHeader>
 
         <Animatable.View
-        ref={viewRef}
-        easing={'ease-in-out'}
-        duration={500}>
+          ref={viewRef}
+          easing={'ease-in-out'}
+          duration={500}>
           <FlatList
             data={places}
-            keyExtractor={ item => item.id}
+            keyExtractor={item => item.id}
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{ paddingBottom: '15%' }}
-            ListFooterComponent={()=>
+            ListFooterComponent={() =>
               <View>
                 <TextUnderHeader>
                   Ultimos produtos cadastrados:
@@ -117,11 +117,12 @@ export default function Home(){
                   data={products}
                   showsVerticalScrollIndicator={false}
                   numColumns={2}
-                  renderItem={({item, index})=>
+                  renderItem={({ item, index }) =>
                     <Animatable.View
-                    animation={'zoomIn'}
-                    duration={1000}
-                    delay={index * 300}>
+                      animation={'zoomIn'}
+                      duration={1000}
+                      delay={index * 300}>
+                      {/* 
                       <View style={styles.listItem}>
                         <TouchableOpacity
                           activeOpacity={0.7}
@@ -134,32 +135,34 @@ export default function Home(){
                           <Text style={styles.name}>{item.nomeProduto}</Text>
                           <Feather name="arrow-right" color={'#000'} size={20} />
                         </View>
-                      </View>
+                      </View>*/}
                     </Animatable.View>
                   }
                 />
               </View>
-              
+
             }
-            renderItem={({item, index})=>
+            renderItem={({ item, index }) =>
               <Animatable.View
-              animation={'zoomIn'}
-              duration={1000}
-              delay={index * 300}>
+                animation={'zoomIn'}
+                duration={1000}
+                delay={index * 300}>
                 <TextUnderHeader>
                   Ultima lista atualizada:
                 </TextUnderHeader>
-                <List onPress={()=>{navigation.navigate("Place", {nomeCasa: item.nomeCasa, ownerName: item.ownerName, id: item.id, qntItems: item.qntItems})}}>
-                  <ListName>{item.nomeCasa}</ListName>
-                  <BoxItens>
-                    <TextItens>{item.qntItems} itens</TextItens>
-                  </BoxItens>
+                <List onPress={() => { navigation.navigate("Place", { nomeCasa: item.nomeCasa, ownerName: item.ownerName, id: item.id, qntItems: item.qntItems }) }}>
+                  <View>
+                    <ListName>{item.nomeCasa}</ListName>
+                    <BoxItens>
+                      <TextItens>{item.qntItems} itens</TextItens>
+                    </BoxItens>
+                  </View>
                   <TextUpdate>Atualizado em: {item.lastUpdate}</TextUpdate>
                 </List>
               </Animatable.View>
             }
-            />
-          </Animatable.View>
+          />
+        </Animatable.View>
       </Container>
     </Body>
   );
